@@ -1,47 +1,50 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+<script>
+import listTable from './components/compList.vue'
+import compControl from './components/compControl.vue'
+import compAdd from './components/compAdd.vue'
+
+import listTask from './data/task.js'
+
+export default {
+  name: 'app',
+  data() {
+    return {
+      listTask: listTask,
+    }
+  },
+
+  components: {
+    listTable,
+    compControl,
+    compAdd,
+  },
+}
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
   <main>
-    <TheWelcome />
+    <div id="app">
+      <div class="wrapper">
+        <h1 class="text-6xl text-red-600 mt-40 mb-20 site-title">Todo List test</h1>
+
+        <div class="block-control flex justify-between mb-20">
+          <compControl />
+
+          <div class="flex-1 pl-5">
+            <compAdd />
+          </div>
+        </div>
+
+        <listTable v-bind:listTask="listTask" />
+      </div>
+    </div>
   </main>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+.wrapper {
+  max-width: 1240px;
+  margin: auto;
+  padding: 0 20px;
 }
 </style>
