@@ -42,6 +42,18 @@ export default {
       }
     },
   },
+
+  methods: {
+    handleDelete() {
+      if (confirm('Do you want delete this task ?')) {
+        this.$emit('handleDelete', this.task)
+      }
+    },
+
+    handleEdit() {
+      this.$emit('handleEdit', this.task)
+    },
+  },
 }
 </script>
 <template>
@@ -52,8 +64,8 @@ export default {
       <div class="level" v-bind:class="getClassLevel">{{ getLevelName }}</div>
     </td>
     <td>
-      <button>Edit</button>
-      <button>Delete</button>
+      <button class="bg-yellow-500 text-white p-2" v-on:click="handleEdit">Edit</button>
+      <button class="bg-red-500 text-white p-2 ml-2" v-on:click="handleDelete">Delete</button>
     </td>
   </tr>
 </template>

@@ -21,6 +21,11 @@ td {
   line-height: 1.6;
 }
 
+th,
+td {
+  padding: 10px;
+}
+
 th {
   font-size: 21px;
   padding: 10px;

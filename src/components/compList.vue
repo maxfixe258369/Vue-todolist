@@ -16,6 +16,15 @@ export default {
       type: Array,
     },
   },
+
+  methods: {
+    handleDelete(data) {
+      this.$emit('handleDelete', data)
+    },
+    handleEdit(taskEdit) {
+      this.$emit('handleEdit', taskEdit)
+    },
+  },
 }
 </script>
 
@@ -40,6 +49,8 @@ export default {
           v-bind:key="task.id"
           v-bind:task="task"
           v-bind:index="index + 1"
+          v-on:handleDelete="handleDelete"
+          v-on:handleEdit="handleEdit"
         />
       </tbody>
     </table>

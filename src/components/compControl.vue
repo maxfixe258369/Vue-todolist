@@ -12,12 +12,32 @@ export default {
     controlSort,
     controlSearch,
   },
+
+  props: {
+    textSearch: {
+      type: String,
+    },
+
+    orderBy: {
+      type: String,
+    },
+  },
+
+  methods: {
+    handleGetText(data) {
+      this.$emit('handleGetText', data)
+    },
+
+    handleSort(data) {
+      this.$emit('handleSort', data)
+    },
+  },
 }
 </script>
 <template>
   <div class="flex-1 pr-5">
-    <controlSort />
+    <controlSort v-bind:orderBy="orderBy" v-on:handleSort="handleSort" />
 
-    <controlSearch />
+    <controlSearch v-bind:textSearch="textSearch" v-on:handleGetText="handleGetText" />
   </div>
 </template>

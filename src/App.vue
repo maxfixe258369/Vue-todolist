@@ -10,6 +10,10 @@ export default {
   data() {
     return {
       listTask: listTask,
+      isShowForm: false,
+      textSearch: '',
+      orderBy: 'Name Ascending',
+      taskSelected: null,
     }
   },
 
@@ -18,6 +22,84 @@ export default {
     compControl,
     compAdd,
   },
+
+  methods: {
+    handleGetText(data) {
+      this.textSearch = data
+    },
+
+    handleSort(data) {
+      this.orderBy = data
+    },
+
+    showForm() {
+      if (this.isShowForm) this.taskEdit = null
+      this.isShowForm = !this.isShowForm
+    },
+
+    compareName(a, b) {
+      var numberName = this.orderBy === 'Name Ascending' ? -1 : 1
+      if (a.name < b.name) return numberName
+      else if (a.name > b.name) return numberName * -1
+      else return 0
+    },
+
+    compareLevel(a, b) {
+      var numberLevel = this.orderBy === 'Level Ascending' ? 1 : -1
+      if (a.level < b.level) return numberLevel
+      else if (a.level > b.level) return numberLevel * -1
+      else return 0
+    },
+
+    handleDelete(data) {
+      this.listTask = this.listTask.filter((item) => item.id !== data.id)
+
+      return listTask
+    },
+
+    handleEdit(taskEdit) {
+      this.isShowForm = true
+      this.taskSelected = taskEdit
+    },
+
+    handleEditTask(taskEditObj) {
+      this.listTask.forEach((item, index) => {
+        if (item.id === taskEditObj.id) {
+          this.listTask.splice(index, 1, taskEditObj)
+        }
+      })
+
+      this.showForm()
+    },
+
+    handleAddTask(data) {
+      this.listTask.push(data)
+    },
+  },
+
+  computed: {
+    getListSearch() {
+      var newItems = []
+      this.listTask.forEach((item) => {
+        if (item.name.toLowerCase().includes(this.textSearch.toLowerCase())) {
+          newItems.push(item)
+        }
+      })
+      return newItems
+    },
+
+    listTaskSort() {
+      var listTask = [...this.getListSearch]
+
+      if (this.orderBy === 'Level Ascending' || this.orderBy === 'Level Descending') {
+        listTask.sort(this.compareLevel)
+      } else {
+        listTask.sort(this.compareName)
+      }
+
+      return listTask
+    },
+  },
 }
 </script>
 
@@ -25,17 +107,32 @@ export default {
   <main>
     <div id="app">
       <div class="wrapper">
-        <h1 class="text-6xl text-red-600 mt-40 mb-20 site-title">Todo List test</h1>
+        <h1 class="text-6xl text-red-600 mt-20 mb-20 site-title">Todo List test</h1>
 
         <div class="block-control flex justify-between mb-20">
-          <compControl />
+          <compControl
+            v-bind:textSearch="textSearch"
+            v-bind:orderBy="orderBy"
+            v-on:handleGetText="handleGetText"
+            v-on:handleSort="handleSort"
+          />
 
           <div class="flex-1 pl-5">
-            <compAdd />
+            <compAdd
+              v-bind:taskSelected="taskSelected"
+              v-bind:isShowForm="isShowForm"
+              v-on:handleAddTask="handleAddTask"
+              v-on:handleEditTask="handleEditTask"
+              v-on:showForm="showForm"
+            />
           </div>
         </div>
 
-        <listTable v-bind:listTask="listTask" />
+        <listTable
+          v-bind:listTask="listTaskSort"
+          v-on:handleDelete="handleDelete"
+          v-on:handleEdit="handleEdit"
+        />
       </div>
     </div>
   </main>
