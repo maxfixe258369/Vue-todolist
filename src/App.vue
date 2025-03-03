@@ -7,6 +7,13 @@ import listTask from './data/task.js'
 
 export default {
   name: 'app',
+
+  components: {
+    listTable,
+    compControl,
+    compAdd,
+  },
+
   data() {
     return {
       listTask: listTask,
@@ -17,10 +24,24 @@ export default {
     }
   },
 
-  components: {
-    listTable,
-    compControl,
-    compAdd,
+  watch: {
+    listTask: {
+      handler(newTask) {
+        var taskString = JSON.stringify(newTask)
+        localStorage.setItem('database', taskString)
+      },
+      deep: true,
+    },
+  },
+
+  created() {
+    var data = localStorage.getItem('database')
+
+    if (data !== null) {
+      this.listTask = JSON.parse(data)
+    } else {
+      this.listTask = []
+    }
   },
 
   methods: {
@@ -53,8 +74,6 @@ export default {
 
     handleDelete(data) {
       this.listTask = this.listTask.filter((item) => item.id !== data.id)
-
-      return listTask
     },
 
     handleEdit(taskEdit) {

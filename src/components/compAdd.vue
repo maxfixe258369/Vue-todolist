@@ -20,7 +20,7 @@ export default {
   },
 
   watch: {
-    taskSelected: function (newData) {
+    taskSelected(newData) {
       this.taskName = newData.name
       this.level = newData.level
     },
