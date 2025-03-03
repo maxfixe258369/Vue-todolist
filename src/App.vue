@@ -125,33 +125,38 @@ export default {
 <template>
   <main>
     <div id="app">
-      <div class="wrapper">
-        <h1 class="text-6xl text-red-600 mt-20 mb-20 site-title">Todo List test</h1>
+      <div class="thumbnail">
+        <img src="./assets/img/keyvisual_img.jpg" alt="thumbnail" />
+      </div>
+      <div class="section-main">
+        <div class="wrapper">
+          <h1 class="text-5xl mb-10 site-title">Todo List</h1>
 
-        <div class="block-control flex justify-between mb-20">
-          <compControl
-            v-bind:textSearch="textSearch"
-            v-bind:orderBy="orderBy"
-            v-on:handleGetText="handleGetText"
-            v-on:handleSort="handleSort"
-          />
-
-          <div class="flex-1 pl-5">
-            <compAdd
-              v-bind:taskSelected="taskSelected"
-              v-bind:isShowForm="isShowForm"
-              v-on:handleAddTask="handleAddTask"
-              v-on:handleEditTask="handleEditTask"
-              v-on:showForm="showForm"
+          <div class="block-control flex justify-between mb-10">
+            <compControl
+              v-bind:textSearch="textSearch"
+              v-bind:orderBy="orderBy"
+              v-on:handleGetText="handleGetText"
+              v-on:handleSort="handleSort"
             />
-          </div>
-        </div>
 
-        <listTable
-          v-bind:listTask="listTaskSort"
-          v-on:handleDelete="handleDelete"
-          v-on:handleEdit="handleEdit"
-        />
+            <div class="flex-1 pl-5">
+              <compAdd
+                v-bind:taskSelected="taskSelected"
+                v-bind:isShowForm="isShowForm"
+                v-on:handleAddTask="handleAddTask"
+                v-on:handleEditTask="handleEditTask"
+                v-on:showForm="showForm"
+              />
+            </div>
+          </div>
+
+          <listTable
+            v-bind:listTask="listTaskSort"
+            v-on:handleDelete="handleDelete"
+            v-on:handleEdit="handleEdit"
+          />
+        </div>
       </div>
     </div>
   </main>
